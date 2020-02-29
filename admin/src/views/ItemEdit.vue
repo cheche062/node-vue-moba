@@ -59,7 +59,7 @@ export default {
       this.model = res.data;
     },
     afterUpload(res) {
-      this.model = {...this.model, icon: res.url} 
+      this.$set(this.model, 'icon', res.url)
       console.log('前端上传结束', res)
     }
   }
