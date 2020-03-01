@@ -37,7 +37,6 @@ export default {
       const res = await this.$http.get("rest/categories");
       this.items = res.data;
       console.log("分类列表数据:", this.items);
-      
     },
 
     async handleDelete(row) {
