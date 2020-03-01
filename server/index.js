@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
 
+app.set('secret', 'asd3434sdsegg')
 app.use(require('cors')())
 app.use(express.json())
 
