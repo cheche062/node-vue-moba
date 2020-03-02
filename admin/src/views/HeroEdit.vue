@@ -2,7 +2,7 @@
   <div>
     <h1>{{id? '编辑': '新建'}}英雄</h1>
     <el-form label-width="120px" @submit.native.prevent="save">
-      <el-tabs value="skills" type="border-card">
+      <el-tabs value="basic" type="border-card">
         <el-tab-pane label="基本信息" name="basic">
           <el-form-item label="名称">
             <el-input v-model="model.name"></el-input>
@@ -45,7 +45,8 @@
           <el-form-item label="头像">
             <el-upload
               class="avatar-uploader"
-              :action="$http.defaults.baseURL + '/upload'"
+              :action="uploadUrl"
+              :headers="getAuthHeaders()"
               :show-file-list="false"
               :on-success="afterUpload"
             >
@@ -70,7 +71,8 @@
               <el-form-item label="图标">
                 <el-upload
                   class="avatar-uploader"
-                  :action="$http.defaults.baseURL + '/upload'"
+                  :action="uploadUrl"
+                  :headers="getAuthHeaders()"
                   :show-file-list="false"
                   :on-success="res => $set(item, 'icon', res.url)"
                 >
