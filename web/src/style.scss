@@ -1,0 +1,100 @@
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+html {
+  font-size: 13px;
+}
+body{
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.2em;
+  background: #f1f1f1;
+}
+a{
+  color: #666;
+
+}
+
+// colors
+$colors: (
+  "primary": #db9e3f,
+  "white": #fff,
+  "light": #f9f9f9,
+  "dark": #222,
+  "gray": #999,
+  "black": #000,
+);
+
+@each $colorKey,$color in $colors {
+  .text-#{$colorKey}{
+    color: $color;
+  }
+}
+
+@each $colorKey,$color in $colors {
+  .bg-#{$colorKey}{
+    color: $color;
+  }
+}
+
+// text align
+@each $var in (left, center, right) {
+  .text-#{$var}{
+    text-align: $var;
+  }
+}
+
+// font size
+$base-font-size: 1rem;
+$font-sizes: (
+  xs: 0.7692, //10px
+  sm: 0.9231, //12px
+  md: 1, //13px
+  lg: 1.0769, //14px
+  xl: 1.2308, //16px
+);
+
+@each $sizeKey,$size in $font-sizes {
+  .fs-#{$sizeKey} {
+    font-size: $size * $base-font-size;
+  }
+}
+
+// flex
+.d-flex{
+  display: flex;
+}
+.flex-column{
+  flex-direction: column;
+}
+.flex-1 {
+  flex: 1;
+}
+
+$flex-jc: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  between: space-between,
+  around: space-around,
+);
+
+@each $key, $value in $flex-jc {
+  .jc-#{$key} {
+    justify-content: $value;
+  }
+}
+
+$flex-ai: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  stretch: stretch,
+);
+
+@each $key, $value in $flex-ai {
+  .ai-#{$key} {
+    align-items: $value;
+  }
+}
