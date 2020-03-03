@@ -5,7 +5,9 @@ Vue.config.productionTip = false
 
 
 import './style.scss'
+import router from './router'
 
 new Vue({
-  render: h => h(App),
+  router,
+  render: h => h(App)
 }).$mount('#app')
