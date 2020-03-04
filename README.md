@@ -1,7 +1,7 @@
 # node-vue-moba
 NodeJs + VueJs (Express + ElementUI) 全栈开发王者荣耀手机端官网和管理后台
 
-> 第三章 p7
+> 第三章 p8
 
 ### admin 后台管理
 
