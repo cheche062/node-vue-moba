@@ -70,7 +70,8 @@
         </el-header>
 
         <el-main>
-          <router-view></router-view>
+          <!-- 由于被多处引用所以需要初始化的标志符 -->
+          <router-view :key="$route.path"></router-view>
         </el-main>
       </el-container>
     </el-container>
