@@ -23,11 +23,11 @@
     <!-- 卡片 -->
     <m-list-card icon="menu" title="新闻资讯" :categories="newsCats">
       <template #items="{category}">
-        <div class="py-2" v-for="(news, i) in category.newsList" :key="i">
-          <span>[{{news.categoryName}}]</span>
-          <span>|</span>
-          <span>{{news.title}}</span>
-          <span>{{news.date}}</span>
+        <div class="py-2 fs-lg d-flex" v-for="(news, i) in category.newsList" :key="i">
+          <span class="text-gray">[{{news.categoryName}}]</span>
+          <span class="px-1">|</span>
+          <span class="flex-1 text-dark text-ellipsis pr-2">{{news.title}}</span>
+          <span class="text-gray fs-sm">{{news.createdAt|date}}</span>
         </div>
       </template>
     </m-list-card>
@@ -45,9 +45,15 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
 export default {
   name: "Home",
   components: {},
+  filters: {
+    date(val) {
+      return dayjs(val).format('MM/DD')
+    }
+  },
   data() {
     return {
       images: [
@@ -61,69 +67,19 @@ export default {
         }
         // autoplay: {delay: 1500}
       },
-      newsCats: [
-        {
-          name: "热门",
-          newsList: [
-            {
-              categoryName: "公告",
-              title: "今天天气真不错！",
-              date: "02/02"
-            },
-            {
-              categoryName: "公告",
-              title: "今天天气真不错！",
-              date: "02/02"
-            },
-            {
-              categoryName: "公告",
-              title: "今天天气真不错！",
-              date: "02/02"
-            }
-          ]
-        },
-        {
-          name: "热门6666",
-          newsList: [
-            {
-              categoryName: "公告",
-              title: "今天天气真不错！",
-              date: "02/02"
-            },
-            {
-              categoryName: "公告",
-              title: "今天天气真不错！",
-              date: "02/02"
-            },
-            {
-              categoryName: "公告",
-              title: "今天天气真不错！",
-              date: "02/02"
-            }
-          ]
-        },
-        {
-          name: "热门3333",
-          newsList: [
-            {
-              categoryName: "公告",
-              title: "今天天气真不错！",
-              date: "02/02"
-            },
-            {
-              categoryName: "公告",
-              title: "今天天气真不错！",
-              date: "02/02"
-            },
-            {
-              categoryName: "公告",
-              title: "今天天气真不错！",
-              date: "02/02"
-            }
-          ]
-        }
-      ]
+      newsCats: []
     };
+  },
+
+  methods: {
+    async fetchNewsCate () {
+      const res = await this.$http.get('news/list')
+      this.newsCats = res.data
+    }
+  },
+
+  created() {
+    this.fetchNewsCate()
   }
 };
 </script>
