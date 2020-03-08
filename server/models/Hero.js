@@ -33,5 +33,5 @@ const schema = new moogoose.Schema({
 
 
 
-
-module.exports = moogoose.model('Hero', schema)
+// 建议加上第三个参数指定 该数据表的名称一般是复数
+module.exports = moogoose.model('Hero', schema, 'heroes')

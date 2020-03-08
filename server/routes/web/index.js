@@ -4,9 +4,10 @@ module.exports = (app) => {
   const mongoose = require('mongoose')
   const Category = mongoose.model('Category')
   const Article = mongoose.model('Article')
+  const Hero = mongoose.model('Hero')
 
   // 自动插入一些文章数据
-  router.get('/news/init', async (req, res) => {
+  router.get('/news/init', async(req, res) => {
     const parent = await Category.findOne({
       name: '新闻分类'
     })
@@ -32,8 +33,8 @@ module.exports = (app) => {
     res.send(JSON.stringify(newsList, null, 4))
   })
 
-
-  router.get('/news/list', async (req, res) => {
+  // 新闻列表页
+  router.get('/news/list', async(req, res) => {
     // const parent = await Category.findOne({
     //   name: '新闻分类'
     // }).populate({
@@ -43,12 +44,12 @@ module.exports = (app) => {
     //   }
     // }).lean()
     const parent = await Category.findOne({
-      name: "新闻分类"
-    })
-    // 聚合查询，同时执行多次查询
+        name: "新闻分类"
+      })
+      // 聚合查询，同时执行多次查询
     const cats = await Category.aggregate([
       // 聚合管道
-      {$match: {parent: parent._id}},
+      { $match: { parent: parent._id } },
       {
         $lookup: {
           from: 'articles',
@@ -59,7 +60,7 @@ module.exports = (app) => {
       },
       {
         $addFields: {
-          newsList: {$slice: ['$newsList', 5]}
+          newsList: { $slice: ['$newsList', 5] }
         }
       }
     ])
@@ -68,7 +69,7 @@ module.exports = (app) => {
     cats.unshift({
       name: '热门',
       newsList: await Article.find().where({
-        categories: {$in: subCats}
+        categories: { $in: subCats }
       }).populate('categories').limit(5).lean()
     })
 
@@ -80,6 +81,62 @@ module.exports = (app) => {
       return cat
     })
 
+
+    res.send(cats)
+  })
+
+  // 导入英雄数据
+  const rawData = require('./heroData.js')
+  router.get('/heroes/init', async(req, res) => {
+    await Hero.deleteMany({})
+
+    for (const cat of rawData) {
+      if (cat.name == '热门') {
+        continue
+      }
+
+      // 找到当前分类在数据库中的对应的数据
+      const category = await Category.findOne({
+        name: cat.name
+      })
+      cat.heroes.map((hero) => {
+          hero.categories = [category]
+        })
+        // 录入英雄
+      await Hero.insertMany(cat.heroes)
+
+    }
+
+    res.send(await Hero.find())
+  })
+
+  // 英雄列表页
+  router.get('/heroes/list', async(req, res) => {
+    const parent = await Category.findOne({
+      name: "英雄分类"
+    })
+
+    // 聚合查询，同时执行多次查询
+    const cats = await Category.aggregate([
+      // 聚合管道
+      { $match: { parent: parent._id } },
+      {
+        $lookup: {
+          from: 'heroes',
+          localField: '_id',
+          foreignField: 'categories',
+          as: 'heroList'
+        }
+      }
+    ])
+
+    const subCats = cats.map(v => v._id)
+    cats.unshift({
+      name: '热门',
+      heroList: await Hero.find().where({
+        categories: { $in: subCats }
+      }).populate('categories').limit(10).lean()
+    })
 
     res.send(cats)
   })
