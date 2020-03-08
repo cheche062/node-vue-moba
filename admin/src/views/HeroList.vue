@@ -40,7 +40,7 @@ export default {
     async fetch() {
       const res = await this.$http.get("rest/heroes");
       this.items = res.data;
-      console.log("英雄列表数据:", this.items);
+      // console.log("英雄列表数据:", this.items);
       
     },
 

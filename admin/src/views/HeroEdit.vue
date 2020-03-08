@@ -54,6 +54,19 @@
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
+
+          <el-form-item label="Banner">
+            <el-upload
+              class="avatar-uploader"
+              :action="uploadUrl"
+              :headers="getAuthHeaders()"
+              :show-file-list="false"
+              :on-success="res => $set(model, 'banner', res.url)"
+            >
+              <img v-if="model.banner" :src="model.banner" class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
         </el-tab-pane>
 
         <el-tab-pane label="技能" name="skills">
@@ -86,6 +99,33 @@
             </el-col>
           </el-row>
         </el-tab-pane>
+
+        <el-tab-pane label="最佳搭档" name="partners">
+          <el-button type="text" @click="model.partners.push({})">
+            <i class="el-icon-plus"></i>添加技能
+          </el-button>
+          <el-row type="flex" style="flex-wrap: wrap">
+            <el-col :md="12" v-for="(item, i) in model.partners" :key="i">
+              <el-form-item label="英雄">
+                <el-select filterable v-model="item.hero">
+                  <el-option 
+                    v-for="hero in heroes" 
+                    :key="hero._id"
+                    :value="hero._id"
+                    :label="hero.name"
+                  >
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="描述">
+                <el-input v-model="item.description" type="textarea"></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button @click="model.partners.splice(i, 1)" type="danger" size="small">删除</el-button>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-tab-pane>
       </el-tabs>
 
       <el-form-item style="margin-top: 1rem">
@@ -103,11 +143,13 @@ export default {
   name: "HeroEdit",
   data() {
     return {
+      heroes: [],
       items: [],
       categories: [],
       model: {
         scores: {},
-        skills: []
+        skills: [],
+        partners: []
       }
     };
   },
@@ -115,6 +157,7 @@ export default {
     this.id && this.fetch();
     this.fetchCategories();
     this.fetchItems();
+    this.fetchHeroes()
   },
   methods: {
     async save() {
@@ -124,7 +167,7 @@ export default {
       } else {
         res = await this.$http.post("rest/heroes", this.model);
       }
-      console.log(res);
+      res;
       this.$router.push("/heroes/list");
       this.$message({
         type: "success",
@@ -138,7 +181,7 @@ export default {
     },
     afterUpload(res) {
       this.$set(this.model, "avatar", res.url);
-      console.log("前端上传结束", res);
+      // console.log("前端上传结束", res);
     },
     async fetchCategories() {
       const res = await this.$http.get(`rest/categories`);
@@ -150,7 +193,11 @@ export default {
       this.items = res.data;
     },
     removeSkill(e) {
-      this.model.skills.splice(e, 1)
+      this.model.skills.splice(e, 1);
+    },
+    async fetchHeroes() {
+      const res = await this.$http.get("rest/heroes");
+      this.heroes = res.data;
     }
   }
 };

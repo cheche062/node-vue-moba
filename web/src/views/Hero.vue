@@ -35,7 +35,7 @@ export default {
   created() {
     this.fetch();
 
-    console.log(this.$route);
+    // console.log(this.$route);
   }
 };
 </script>
