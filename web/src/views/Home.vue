@@ -23,23 +23,35 @@
     <!-- 新闻卡片 -->
     <m-list-card icon="menu" title="新闻资讯" :categories="newsCats">
       <template #items="{category}">
-        <div class="py-2 fs-lg d-flex" v-for="(news, i) in category.newsList" :key="i">
+        <router-link 
+          class="py-2 fs-lg d-flex" 
+          v-for="(news, i) in category.newsList" 
+          :key="i"
+          tag="div"
+          :to="`/article/${news._id}`"
+        >
           <span class="text-gray">[{{news.categoryName}}]</span>
           <span class="px-1">|</span>
           <span class="flex-1 text-dark text-ellipsis pr-2">{{news.title}}</span>
           <span class="text-gray fs-sm">{{news.createdAt|date}}</span>
-        </div>
+        </router-link>
       </template>
     </m-list-card>
 
     <!-- 英雄卡片 -->
-    <m-list-card icon="menu" title="英雄列表" :categories="newsCats">
+    <m-list-card icon="menu" title="英雄列表" :categories="heroCats">
       <template #items="{category}">
-        <div class="py-2 fs-lg d-flex" v-for="(news, i) in category.newsList" :key="i">
-          <span class="text-gray">[{{news.categoryName}}]</span>
-          <span class="px-1">|</span>
-          <span class="flex-1 text-dark text-ellipsis pr-2">{{news.title}}</span>
-          <span class="text-gray fs-sm">{{news.createdAt|date}}</span>
+        <div class="d-flex flex-wrap" style="margin: 0 -0.5rem">
+          <router-link 
+            class="p-2 text-center" 
+            v-for="(hero, i) in category.heroList" :key="i"
+            style="width: 20%"
+            tag="div"
+            :to="`/hero/${hero._id}`"
+          >
+            <img class="w-100" :src="hero.avatar" alt="">
+            <div>{{hero.name}}</div>
+          </router-link>
         </div>
       </template>
     </m-list-card>
@@ -76,10 +88,11 @@ export default {
       swiperOption: {
         pagination: {
           el: ".pagination-home"
-        }
+        },
         // autoplay: {delay: 1500}
       },
-      newsCats: []
+      newsCats: [],
+      heroCats: [],
     };
   },
 
@@ -87,11 +100,17 @@ export default {
     async fetchNewsCate() {
       const res = await this.$http.get("news/list");
       this.newsCats = res.data;
-    }
+    },
+    async heroCate() {
+      const res = await this.$http.get("heroes/list");
+      this.heroCats = res.data;
+    },
+    
   },
 
   created() {
     this.fetchNewsCate();
+    this.heroCate();
   }
 };
 </script>
