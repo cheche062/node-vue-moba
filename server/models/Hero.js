@@ -3,6 +3,7 @@ const moogoose = require('mongoose')
 const schema = new moogoose.Schema({
   name: {type: String},
   avatar: {type: String},
+  banner: {type: String},
   title: {type: String},
   categories: [{type: moogoose.SchemaTypes.ObjectId, ref: 'Category'}],
   scores: {
