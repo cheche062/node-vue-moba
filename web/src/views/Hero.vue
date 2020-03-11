@@ -34,6 +34,58 @@
       </div>
     </div>
 
+    <div>
+      <div class="px-3 bg-white">
+        <div class="nav d-flex jc-around py-2 pt-3 pb-2 border-bottom">
+          <div class="nav-item active">
+            <div class="nav-link">英雄初识</div>
+          </div>
+          <div class="nav-item">
+            <div class="nav-link">进阶攻略</div>
+          </div>
+        </div>
+      </div>
+
+      <swiper>
+        <swiper-slide>
+          <div>
+            <div class="p-3 bg-white border-bottom">
+              <div class="d-flex jc-around">
+                <router-link class="btn btn-lg flex-1" tag="button" to="/">
+                  <i class="iconfont icon-menu"></i>
+                  英雄介绍视频
+                </router-link>
+                <router-link class="btn btn-lg flex-1 ml-2" tag="button" to="/">
+                  <i class="iconfont icon-menu"></i>
+                  一图识英雄
+                </router-link>
+              </div>
+
+              <div class="skills bg-white mt-4">
+                <div class="d-flex jc-around ">
+                  <img 
+                    class="" 
+                    :src="item.icon" 
+                    v-for="(item, index) in model.skills" 
+                    :key="index"
+                    width="60"
+                    height="60"
+                  >
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </swiper-slide>
+
+        <swiper-slide>
+          
+        </swiper-slide>
+      </swiper>
+
+
+    </div>
+
   </div>
 </template>
 
