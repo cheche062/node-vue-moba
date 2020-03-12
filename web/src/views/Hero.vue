@@ -64,13 +64,24 @@
               <div class="skills bg-white mt-4">
                 <div class="d-flex jc-around ">
                   <img 
-                    class="" 
+                    class="icon"
+                    :class="{active: currentSkillIndex === i}"
+                    @click="currentSkillIndex = i"
                     :src="item.icon" 
-                    v-for="(item, index) in model.skills" 
-                    :key="index"
+                    v-for="(item, i) in model.skills" 
+                    :key="i"
                     width="60"
                     height="60"
                   >
+                </div>
+                <div v-if="currentSkill" class="">
+                  <div class="d-flex pt-4 pb-3">
+                    <h3 class="m-0">{{currentSkill.name}}</h3>
+                    <span class="ml-4 text-gray">(冷却值：{{currentSkill.delay}} 消耗：{{currentSkill.cost}})</span>
+                  </div>
+                  <p>{{currentSkill.description}}</p>
+                  <div class="border-bottom"></div>
+                  <p>小提示：{{model.usageTips}}</p>
                 </div>
               </div>
             </div>
@@ -97,8 +108,14 @@ export default {
 
   data() {
     return {
-      model: {}
+      model: {},
+      currentSkillIndex: 0
     };
+  },
+  computed: {
+    currentSkill() {
+      return this.model.skills[this.currentSkillIndex]
+    }
   },
 
   methods: {
@@ -116,6 +133,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../assets/scss/variables";
+
 .page-hero{
   .top{
     height: 50vw;
@@ -138,7 +157,19 @@ export default {
       }
     }
   }
+  .icon.active{
+    border: 1px solid #f00;
+  }
 
+  .skills{
+    img.icon{
+      border: 3px solid map-get($colors, 'white');
+      border-radius: 45%;
+      &.active{
+        border: 3px solid map-get($colors, 'primary');
+      }
+    }
+  }
 }
 
 </style>
