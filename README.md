@@ -15,6 +15,9 @@ vue add router
 
 ```shell
 npm init -y
+
+# 登录服务器
+ssh root@47.90.84.13
 ```
 
 

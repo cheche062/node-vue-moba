@@ -55,16 +55,6 @@
         </div>
       </template>
     </m-list-card>
-
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
-    <p>aaa</p>
   </div>
 </template>
 
