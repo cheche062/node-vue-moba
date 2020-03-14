@@ -6,6 +6,7 @@ module.exports = (app) => {
   const multer = require('multer')
   const upload = multer({ dest: __dirname + '/../../uploads' })
 
+  const RELEASE_URL = "test.cheche062.top"
   const router = express.Router({
     mergeParams: true
   })
@@ -66,7 +67,7 @@ module.exports = (app) => {
   // 上传图片
   app.post('/admin/api/upload', authMiddleware(), upload.single('file'), async(req, res) => {
     const file = req.file
-    file.url = `http://localhost:3000/uploads/${file.filename}`
+    file.url = `http://${RELEASE_URL}/uploads/${file.filename}`
     res.send(file)
   })
 
