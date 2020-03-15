@@ -4,7 +4,19 @@ module.exports = (app) => {
   const jwt = require('jsonwebtoken')
   const assert = require('http-assert')
   const multer = require('multer')
-  const upload = multer({ dest: __dirname + '/../../uploads' })
+  const MAO = require('multer-aliyun-oss')
+
+  const upload = multer({
+     dest: __dirname + '/../../uploads' 
+    // storage: MAO({
+    //   config: {
+    //     region: '<region>',
+    //     accessKeyId: '<accessKeyId>',
+    //     accessKeySecret: '<accessKeySecret>',
+    //     bucket: '<bucket>'
+    //   }
+    // })
+  })
 
   const RELEASE_URL = "test.cheche062.top"
   const router = express.Router({
@@ -56,7 +68,7 @@ module.exports = (app) => {
   })
 
   // 资源中间件
-  const resourceMiddleware = async (req, res, next) => {
+  const resourceMiddleware = async(req, res, next) => {
     const modeName = require('inflection').classify(req.params.resource)
     req.Model = require(`../../models/${modeName}`)
 
