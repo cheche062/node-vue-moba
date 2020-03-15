@@ -1,7 +1,7 @@
 # node-vue-moba 
 ## NodeJs + VueJs + MongoDB (Express + ElementUI) 全栈开发王者荣耀手机端官网和管理后台
-> web地址: [test.cheche062.top](https://test.cheche062.top)
-> 后台管理地址: [后台管理](https://test.cheche062.top/admin)
+* web地址: [test.cheche062.top](https://test.cheche062.top) 
+* 后台管理地址: [test.cheche062.top/admin](https://test.cheche062.top/admin)
 
 ### server 服务管理
 * nodemon 服务的实时监听
