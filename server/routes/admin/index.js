@@ -7,15 +7,15 @@ module.exports = (app) => {
   const MAO = require('multer-aliyun-oss')
 
   const upload = multer({
-     dest: __dirname + '/../../uploads' 
-    // storage: MAO({
-    //   config: {
-    //     region: '<region>',
-    //     accessKeyId: '<accessKeyId>',
-    //     accessKeySecret: '<accessKeySecret>',
-    //     bucket: '<bucket>'
-    //   }
-    // })
+    //  dest: __dirname + '/../../uploads' 
+    storage: MAO({
+      config: {
+        region: 'oss-cn-zhangjiakou',
+        accessKeyId: 'LTAI4FtEDFnaSaxhsTiwJcgQ',
+        accessKeySecret: 'Lw0cZqwCTEiPq9gfFST6YOz8AW4jhj',
+        bucket: 'node-vue-moba-cheche'
+      }
+    })
   })
 
   const RELEASE_URL = "test.cheche062.top"
@@ -79,7 +79,7 @@ module.exports = (app) => {
   // 上传图片
   app.post('/admin/api/upload', authMiddleware(), upload.single('file'), async(req, res) => {
     const file = req.file
-    file.url = `http://${RELEASE_URL}/uploads/${file.filename}`
+    // file.url = `http://${RELEASE_URL}/uploads/${file.filename}`
     res.send(file)
   })
 
