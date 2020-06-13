@@ -4,7 +4,7 @@ import router from './router/index'
 
 
 const http = axios.create({
-  // 把服务地址动态化
+  // 把服务地址动态化(开发时则指向本地该配置地址，生产时则指向生产的地址会使用后面一个)
   baseURL: process.env.VUE_APP_API_URL || '/admin/api'
   // baseURL: 'http://localhost:3000/admin/api'
 })

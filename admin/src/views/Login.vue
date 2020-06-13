@@ -42,9 +42,13 @@ export default {
 
 <style scoped>
 .login-container{
-  margin: auto;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
 }
 .login-card {
+  margin: auto;
   width: 25rem;
+  margin-top: 150px;
 }
 </style>
