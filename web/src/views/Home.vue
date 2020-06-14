@@ -1,9 +1,16 @@
 <template>
   <div class="home">
     <swiper :options="swiperOption">
-      <swiper-slide v-for="(item, index) in images" :key="index">
-        <img class="w-100" src="../assets/images/654e2025b51f89efd0646f328fc86986.jpeg" />
+      <swiper-slide>
+        <img class="w-100" src="../assets/images/1.jpeg" />
       </swiper-slide>
+      <swiper-slide>
+        <img class="w-100" src="../assets/images/2.jpeg" />
+      </swiper-slide>
+      <swiper-slide>
+        <img class="w-100" src="../assets/images/3.jpeg" />
+      </swiper-slide>
+
       <div class="swiper-pagination pagination-home text-right px-3 pb-1" slot="pagination"></div>
     </swiper>
 
@@ -23,9 +30,9 @@
     <!-- 新闻卡片 -->
     <m-list-card icon="menu" title="新闻资讯" :categories="newsCats">
       <template #items="{category}">
-        <router-link 
-          class="py-2 fs-lg d-flex" 
-          v-for="(news, i) in category.newsList" 
+        <router-link
+          class="py-2 fs-lg d-flex"
+          v-for="(news, i) in category.newsList"
           :key="i"
           tag="div"
           :to="`/article/${news._id}`"
@@ -42,14 +49,15 @@
     <m-list-card icon="menu" title="英雄列表" :categories="heroCats">
       <template #items="{category}">
         <div class="d-flex flex-wrap" style="margin: 0 -0.5rem">
-          <router-link 
-            class="p-2 text-center" 
-            v-for="(hero, i) in category.heroList" :key="i"
+          <router-link
+            class="p-2 text-center"
+            v-for="(hero, i) in category.heroList"
+            :key="i"
             style="width: 20%"
             tag="div"
             :to="`/hero/${hero._id}`"
           >
-            <img class="w-100" :src="hero.avatar" alt="">
+            <img class="w-100" :src="hero.avatar" alt />
             <div>{{hero.name}}</div>
           </router-link>
         </div>
@@ -70,19 +78,15 @@ export default {
   },
   data() {
     return {
-      images: [
-        "../assets/images/654e2025b51f89efd0646f328fc86986.jpeg",
-        "../assets/images/740e3c5ff2bb22f40f20317ec53afe30.jpeg",
-        "../assets/images/1c86348d9d7a0c06b8162f703e087613.jpeg"
-      ],
+      images: ["../assets/images/1.jpeg"],
       swiperOption: {
         pagination: {
           el: ".pagination-home"
-        },
+        }
         // autoplay: {delay: 1500}
       },
       newsCats: [],
-      heroCats: [],
+      heroCats: []
     };
   },
 
@@ -94,8 +98,7 @@ export default {
     async heroCate() {
       const res = await this.$http.get("heroes/list");
       this.heroCats = res.data;
-    },
-    
+    }
   },
 
   created() {

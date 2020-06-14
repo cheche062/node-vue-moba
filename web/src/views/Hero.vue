@@ -15,7 +15,7 @@
       <div class="info text-white p-3">
         <div class="fs-sm">{{model.title}}</div>
         <h2 class="my-2">{{model.name}}</h2>
-        <div class="fs-sm">{{[...model.categories].map(v=>v.name).join('/')}}</div>
+        <!-- <div class="fs-sm">{{[...model.categories].map(v=>v.name).join('/')}}</div> -->
         <div class="d-flex jc-between pt-2">
           <div class="scores d-flex ai-center" v-if="model.scores">
             <span>难度</span>
@@ -122,12 +122,13 @@ export default {
     async fetch() {
       const res = await this.$http.get(`/heroes/${this.id}`);
       this.model = res.data;
+
+      console.log("数据====", res.data);
+      
     }
   },
   created() {
     this.fetch();
-
-    // console.log(this.$route);
   }
 };
 </script>

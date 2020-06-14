@@ -49,6 +49,7 @@ export default {
 .login-card {
   margin: auto;
   width: 25rem;
-  margin-top: 150px;
+  /* margin-top: 150px; */
+  transform: translateY(-50%);
 }
 </style>
